@@ -33,6 +33,23 @@ class CrosstoolNg < Formula
   depends_on "ncurses" if DevelopmentTools.clang_build_version >= 1000
   depends_on "xz"
 
+  patch :p1, <<~EOS
+--- a/scripts/crosstool-NG.sh
++++ b/scripts/crosstool-NG.sh
+@@ -325,11 +325,6 @@
+ # the previous build was successful.
+ CT_DoExecLog ALL chmod -R u+w "${CT_PREFIX_DIR}"
+
+-# Check install file system case-sensitiveness
+-CT_DoExecLog DEBUG touch "${CT_PREFIX_DIR}/foo"
+-CT_TestAndAbort "Your file system in '${CT_PREFIX_DIR}' is *not* case-sensitive!" -f "${CT_PREFIX_DIR}/FOO"
+-CT_DoExecLog DEBUG rm -f "${CT_PREFIX_DIR}/foo"
+-
+ # Setting up the rest of the environment only if not restarting
+ if [ -z "${CT_RESTART}" ]; then
+     case "${CT_SYSROOT_NAME}" in
+EOS
+
   def install
     if build.head?
       system "./bootstrap"
