@@ -24,6 +24,7 @@ class Pidgin < Formula
   depends_on "libidn"
   depends_on "libotr"
   depends_on "pango"
+  depends_on "meanwhile"
 
   # Finch has an equal port called purple-otr but it is a NIGHTMARE to compile
   # If you want to fix this and create a PR on Homebrew please do so.
@@ -44,7 +45,6 @@ class Pidgin < Formula
       --disable-gstreamer
       --disable-gstreamer-interfaces
       --disable-gtkspell
-      --disable-meanwhile
       --disable-vv
       --enable-gnutls=yes
       --with-tclconfig=#{MacOS.sdk_path}/System/Library/Frameworks/Tcl.framework
