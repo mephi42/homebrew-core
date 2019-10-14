@@ -48,6 +48,23 @@ class CrosstoolNg < Formula
     # Must be done in two steps
     system "make"
     system "make", "install"
+
+    Pathname.new("#{share}/crosstool-ng/packages/zlib/1.2.11/0003-consistent-ar-and-ranlib.patch").atomic_write <<~EOS
+--- a/configure
++++ b/configure
+@@ -246,6 +246,11 @@ if test "$gcc" -eq 1 && ($cc -c $test.c) >> configure.log 2>&1; then
+              else
+                  AR="/usr/bin/libtool"
+              fi
++             if ranlib -V 2>&1 | grep Apple > /dev/null; then
++                 RANLIB="ranlib"
++             else
++                 RANLIB="/usr/bin/ranlib"
++             fi
+              ARFLAGS="-o" ;;
+   *)             LDSHARED=${LDSHARED-"$cc -shared"} ;;
+   esac
+EOS
   end
 
   test do
