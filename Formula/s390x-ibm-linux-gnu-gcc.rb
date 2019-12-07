@@ -51,15 +51,16 @@ class S390xIbmLinuxGnuGcc < Formula
     chdir ct_work_dir do
       # the following config can be generated using ct-ng savedefconfig
       Pathname.new("defconfig").atomic_write <<~EOS
+        CT_CONFIG_VERSION="3"
         CT_LOCAL_TARBALLS_DIR="#{HOMEBREW_CACHE}"
         CT_PREFIX_DIR="#{prefix}"
         # CT_PREFIX_DIR_RO is not set
-        CT_ARCH_s390=y
+        CT_ARCH_S390=y
         CT_MULTILIB=y
         CT_ARCH_64=y
-        CT_KERNEL_linux=y
+        CT_KERNEL_LINUX=y
         CT_BINUTILS_PLUGINS=y
-        CT_COMP_TOOLS_automake=y
+        CT_COMP_TOOLS_AUTOMAKE=y
         CT_CC_GCC_VERSION=#{version}
       EOS
       ENV.delete("CC")  # fix "libtool:   error: specify a tag with '--tag'" during "Installing libiconv for host"
